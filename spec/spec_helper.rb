@@ -1,7 +1,7 @@
 require_relative '../quest.rb'
 
 RSpec.shared_context 'grid setup' do
-  let(:grid_scale) { 10 }
+  let(:grid_scale) { 8 }
   before(:each) { GridPosition.scale = grid_scale }
 end
 

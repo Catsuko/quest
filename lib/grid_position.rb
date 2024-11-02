@@ -86,10 +86,10 @@ class GridPosition
   end
 
   def inspect
-    "(#{@x}, #{@y})"
+    to_s
   end
 
   def to_s
-    inspect
+    "(#{@x}, #{@y})"
   end
 end

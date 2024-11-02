@@ -1,4 +1,4 @@
-class GridPosition
+class Position
   class << self
     def at(x, y)
       new(translate(x), translate(y))

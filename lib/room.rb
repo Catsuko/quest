@@ -1,19 +1,19 @@
 class Room
-  def initialize(grid)
-    @grid = grid
+  def initialize(bounds)
+    @bounds = bounds
     @actors = []
-    @tiles = grid.map { |position| position.place(yield) } if block_given?
+    @tiles = bounds.map { |position| position.place(yield) } if block_given?
   end
 
   def add(actor, at: nil)
-    step(from: at || @grid.sample) do |pos|
+    position(from: at || @bounds.sample) do |pos|
       @actors << actor.move_to(pos)
       actor
     end || actor.remove
   end
 
-  def step(x_dir = 0, y_dir = 0, from:, &block)
-    @grid.step(x_dir, y_dir, from: from) do |pos|
+  def position(x_dir = 0, y_dir = 0, from:, &block)
+    @bounds.position(x_dir, y_dir, from: from) do |pos|
       block.call(pos) unless occupied?(pos)
     end
   end

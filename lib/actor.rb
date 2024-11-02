@@ -13,16 +13,10 @@ class Actor
   end
 
   def at?(position)
-    body_position == position
+    Position.at(@body.x, @body.y) == position
   end
 
   def remove
     @body.remove
-  end
-
-  private
-
-  def body_position
-    GridPosition.at(@body.x, @body.y)
   end
 end

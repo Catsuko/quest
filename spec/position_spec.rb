@@ -1,4 +1,4 @@
-RSpec.describe GridPosition do
+RSpec.describe Position do
   describe 'Class Methods' do
     it 'cannot be constructed outside of factory methods' do
       expect { described_class.new(1, 1) }.to raise_error(NoMethodError)

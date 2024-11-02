@@ -1,4 +1,4 @@
-class Grid
+class Bounds
   include Enumerable
 
   def initialize(min, max)
@@ -6,17 +6,17 @@ class Grid
     @max = max
   end
 
-  def step(x_dir = 0, y_dir = 0, from: nil)
+  def position(x_dir = 0, y_dir = 0, from: nil)
     pos = (from || @min).step(x_dir, y_dir)
-    yield(pos) if in_bounds?(pos)
+    yield(pos) if contains?(pos)
   end
 
-  def out_of_bounds?(pos)
+  def out?(pos)
     pos.left_of?(@min) || pos.below?(@min) || pos.right_of?(@max) || pos.above?(@max)
   end
 
-  def in_bounds?(pos)
-    !out_of_bounds?(pos)
+  def contains?(pos)
+    !out?(pos)
   end
 
   def each

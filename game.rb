@@ -15,4 +15,5 @@ update do
   room.update
 end
 
+set title: 'QUEST', borderless: true
 show

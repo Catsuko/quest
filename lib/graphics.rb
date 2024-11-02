@@ -4,7 +4,7 @@ module Graphics
   end
 
   def self.stone_pillar
-    Square.new(z: 1, size: GridPosition.scale(0.5), color: 'gray')
+    Square.new(z: 1, size: GridPosition.scale(0.7), color: 'gray')
   end
 
   def self.hero

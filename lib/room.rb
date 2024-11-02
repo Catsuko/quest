@@ -9,7 +9,7 @@ class Room
     step(from: at || @grid.sample) do |pos|
       @actors << actor.move_to(pos)
       actor
-    end
+    end || actor.remove
   end
 
   def step(x_dir = 0, y_dir = 0, from:, &block)
@@ -27,7 +27,7 @@ class Room
   end
 
   def clear
-    @actors.each(&:clear)
-    @tiles&.each(&:clear)
+    @actors.each(&:remove)
+    @tiles&.each(&:remove)
   end
 end

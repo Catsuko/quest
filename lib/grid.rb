@@ -7,8 +7,7 @@ class Grid
   end
 
   def step(x_dir = 0, y_dir = 0, from: nil)
-    from ||= @min
-    pos = from.step(x_dir, y_dir)
+    pos = (from || @min).step(x_dir, y_dir)
     yield(pos) if in_bounds?(pos)
   end
 

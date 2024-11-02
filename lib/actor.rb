@@ -1,9 +1,11 @@
 class Actor
-  def initialize(body)
+  def initialize(body, driver: nil)
     @body = body
+    @driver = driver
   end
 
-  def update(_room)
+  def update(room)
+    @driver&.update(self, inside: room)
   end
 
   def move_to(position)
@@ -14,8 +16,8 @@ class Actor
     body_position == position
   end
 
-  def clear
-    @body.clear
+  def remove
+    @body.remove
   end
 
   private

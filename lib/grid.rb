@@ -1,8 +1,6 @@
 class Grid
   include Enumerable
 
-  attr_reader :cell_size
-
   def initialize(min, max)
     @min = min
     @max = max

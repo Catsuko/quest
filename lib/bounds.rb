@@ -33,6 +33,10 @@ class Bounds
     end
   end
 
+  def move(x_dir, y_dir)
+    self.class.new(@min.step(x_dir, y_dir), @max.step(x_dir, y_dir))
+  end
+
   def sample
     to_a.sample
   end

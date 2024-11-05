@@ -1,13 +1,13 @@
 class Room
-  def initialize(bounds)
+  def initialize(bounds, actors: Actors.new)
     @bounds = bounds
-    @actors = []
+    @actors = actors
     @tiles = bounds.map { |position| position.place(yield) } if block_given?
   end
 
-  def add(actor, at: nil)
+  def add(actor, player: false, at: nil)
     position(from: at || @bounds.sample) do |pos|
-      @actors << actor.move_to(pos)
+      @actors.add(actor.move_to(pos), player: player)
       actor
     end || actor.remove
   end
@@ -19,15 +19,15 @@ class Room
   end
 
   def occupied?(pos)
-    @actors.any? { |actor| actor.at?(pos) }
+    @actors.occupies?(pos)
   end
 
   def update
-    @actors.each { |actor| actor.update(self) }
+    @actors.update(self)
   end
 
   def clear
-    @actors.each(&:remove)
+    @actors.remove_all
     @tiles&.each(&:remove)
   end
 end

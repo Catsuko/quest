@@ -10,4 +10,8 @@ module Graphics
   def self.hero
     Square.new(z: 1, size: Position.scale(0.4), color: 'green')
   end
+
+  def self.enemy
+    Square.new(z: 1, size: Position.scale(0.5), color: 'red')
+  end
 end

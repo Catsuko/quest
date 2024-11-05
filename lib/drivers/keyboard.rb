@@ -6,10 +6,11 @@ module Drivers
     end
 
     def update(actor, inside:)
-      step_direction do |x_dir, y_dir|
-        actor.step(x_dir, y_dir, inside: inside)
-      end
+      direction = step_direction
+      actor.step(*direction, inside: inside) if direction
+
       @direction = nil
+      !direction.nil?
     end
 
     def bind(input_event)
@@ -25,13 +26,13 @@ module Drivers
 
       case @direction
       when :up
-        yield(0, 1)
+        [0, 1]
       when :down
-        yield(0, -1)
+        [0, -1]
       when :right
-        yield(1, 0)
+        [1, 0]
       when :left
-        yield(-1, 0)
+        [-1, 0]
       end
     end
   end

@@ -8,6 +8,10 @@ class Actor
     @driver&.update(self, inside: room)
   end
 
+  def intent
+    @driver ? @driver.intent : Intents::Pass
+  end
+
   def step(x_dir, y_dir, inside:)
     inside.position(x_dir, y_dir, from: position) do |target_position|
       move_to(target_position)

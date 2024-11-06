@@ -12,11 +12,13 @@ room_bounds = Bounds.new(room_min_pos, room_min_pos.step(5, 5))
 room = Room.new(room_bounds, &Graphics.method(:tile))
 
 keyboard_driver = Drivers::Keyboard.new
-hero = room.add(Actor.new(Graphics.hero, driver: keyboard_driver), player: true)
+hero = room.add(Actor.new(Graphics.hero, driver: keyboard_driver), faction: :player)
 
 enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Random.new))
+enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Random.new))
+enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Random.new))
 
-stone_pillars = 10.times { room.add(Actor.new(Graphics.stone_pillar)) }
+stone_pillars = 5.times { room.add(Actor.new(Graphics.stone_pillar)) }
 
 on :key_down, &keyboard_driver.method(:bind)
 

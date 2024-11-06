@@ -5,12 +5,10 @@ module Drivers
       @direction = nil
     end
 
-    def update(actor, inside:)
+    def intent
       direction = step_direction
-      actor.step(*direction, inside: inside) if direction
-
       @direction = nil
-      !direction.nil?
+      Intents::Move.new(*direction) if direction
     end
 
     def bind(input_event)

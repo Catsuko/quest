@@ -1,13 +1,19 @@
 class Room
-  def initialize(bounds, actors: Actors.new)
+  def initialize(bounds)
     @bounds = bounds
-    @actors = actors
+    @factions = {}
+    @faction_order = []
     @tiles = bounds.map { |position| position.place(yield) } if block_given?
   end
 
-  def add(actor, player: false, at: nil)
+  def add(actor, at: nil, faction: :world)
     position(from: at || @bounds.sample) do |pos|
-      @actors.add(actor.move_to(pos), player: player)
+      if !@faction_order.include?(faction)
+        @factions.store(faction, [])
+        @faction_order << faction
+      end
+
+      @factions.fetch(faction) << actor.move_to(pos)
       actor
     end || actor.remove
   end
@@ -19,15 +25,28 @@ class Room
   end
 
   def occupied?(pos)
-    @actors.occupies?(pos)
+    all_actors.any? { |actor| actor.at?(pos) }
   end
 
   def update
-    @actors.update(self)
+    @phase ||= Phases::GatherIntents.new(actors_for_turn)
+    @phase = @phase.update(inside: self)
   end
 
-  def clear
-    @actors.remove_all
-    @tiles&.each(&:remove)
+  def change_turn
+    return [] if @faction_order.empty?
+
+    @faction_order << @faction_order.shift
+    actors_for_turn
+  end
+
+  private
+
+  def actors_for_turn
+    @factions[@faction_order.first] || []
+  end
+
+  def all_actors
+    @factions.values.flatten
   end
 end

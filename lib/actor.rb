@@ -4,10 +4,6 @@ class Actor
     @driver = driver
   end
 
-  def update(room)
-    @driver&.update(self, inside: room)
-  end
-
   def intent
     @driver ? @driver.intent : Intents::Pass
   end

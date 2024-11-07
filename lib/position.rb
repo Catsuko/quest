@@ -78,8 +78,8 @@ class Position
   end
 
   def place(body)
-    offset = body.size * 0.5
-    tap do
+    body.tap do
+      offset = body.size * 0.5
       body.x = @x - offset
       body.y = @y - offset
     end

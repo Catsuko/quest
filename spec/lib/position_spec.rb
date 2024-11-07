@@ -105,12 +105,16 @@ RSpec.describe Position do
     end
 
     describe '#place' do
+      let(:body_spy) { spy('Fake Body').tap { |s| allow(s).to receive(:size).and_return(grid_scale) } }
+
       it 'centers the body at the position' do
-        body = spy('Fake Body')
-        allow(body).to receive(:size).and_return(grid_scale)
-        expect(body).to receive(:x=).with(x)
-        expect(body).to receive(:y=).with(y)
-        position.place(body)
+        expect(body_spy).to receive(:x=).with(x)
+        expect(body_spy).to receive(:y=).with(y)
+        position.place(body_spy)
+      end
+
+      it 'returns the placed body' do
+        expect(position.place(body_spy)).to be body_spy
       end
     end
   end

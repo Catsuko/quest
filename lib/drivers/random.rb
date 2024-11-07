@@ -1,14 +1,10 @@
 module Drivers
-  class Random
-    def intent
-      Intents::Move.new(*random_direction)
-    end
-
-    private
-
-    def random_direction
+  module Random
+    def self.intent
       @directions ||= [[0, 1], [0, -1], [1, 0], [-1, 0]]
-      @directions.sample
+      Intents::Move.new(*@directions.sample)
     end
+
+    def self.bind(*); end
   end
 end

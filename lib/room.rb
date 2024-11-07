@@ -33,6 +33,10 @@ class Room
     @phase = @phase.update(inside: self)
   end
 
+  def bind(environment)
+    all_actors.map { |actor| actor.bind(environment) }.compact
+  end
+
   def change_turn
     return [] if @faction_order.empty?
 

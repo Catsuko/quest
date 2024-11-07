@@ -11,10 +11,8 @@ module Drivers
       Intents::Move.new(*direction) if direction
     end
 
-    def bind(input_event)
-      return unless direction = @key_bindings[input_event.key]
-
-      @direction = direction      
+    def bind(environment)
+      environment.on(:key_down, &method(:bind_to_key_down))
     end
 
     private
@@ -32,6 +30,12 @@ module Drivers
       when :left
         [-1, 0]
       end
+    end
+
+    def bind_to_key_down(input_event)
+      return unless direction = @key_bindings[input_event.key]
+
+      @direction = direction      
     end
   end
 end

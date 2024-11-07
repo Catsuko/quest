@@ -4,6 +4,10 @@ class Actor
     @driver = driver
   end
 
+  def bind(environment)
+    @driver&.bind(environment)
+  end
+
   def intent
     @driver ? @driver.intent : Intents::Pass
   end

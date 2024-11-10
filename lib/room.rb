@@ -40,6 +40,10 @@ class Room
     actors_for_turn
   end
 
+  def find_actors(faction)
+    @factions.fetch(faction) { [] }
+  end
+
   private
 
   def actors_for_turn

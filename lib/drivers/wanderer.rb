@@ -10,7 +10,7 @@ module Drivers
       @leash_distance = leash_distance
     end
 
-    def intent(actor)
+    def intent(actor, *)
       position = actor.position
       @origin ||= position
       selected_direction = valid_directions(position, origin: @origin).sample

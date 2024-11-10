@@ -3,6 +3,7 @@ require 'ruby2d'
 require_relative 'quest'
 require_relative 'lib/drivers/keyboard'
 require_relative 'lib/drivers/wanderer'
+require_relative 'lib/drivers/chaser'
 require_relative 'lib/graphics'
 
 tile_size = 64
@@ -15,9 +16,10 @@ keyboard_driver = Drivers::Keyboard.new
 keyboard_driver.bind(self)
 hero = room.add(Actor.new(Graphics.hero, driver: keyboard_driver), faction: :player)
 
+chaser = Drivers::Chaser.new(:player)
 enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Wanderer.anywhere))
-enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Wanderer.new))
-enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Wanderer.new))
+enemy = room.add(Actor.new(Graphics.enemy, driver: chaser))
+enemy = room.add(Actor.new(Graphics.enemy, driver: chaser))
 
 stone_pillars = 5.times { room.add(Actor.new(Graphics.stone_pillar)) }
 

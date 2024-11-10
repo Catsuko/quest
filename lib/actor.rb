@@ -4,8 +4,8 @@ class Actor
     @driver = driver
   end
 
-  def intent
-    @driver ? @driver.intent(self) : Intents::Pass
+  def intent(inside)
+    @driver ? @driver.intent(self, inside: inside) : Intents::Pass
   end
 
   def step(x_dir, y_dir, inside:)

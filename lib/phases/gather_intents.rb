@@ -7,7 +7,7 @@ module Phases
     end
 
     def update(inside:)
-      return next_phase if ready? || timeout?
+      return next_phase if ready?(inside) || timeout?
 
       self
     end
@@ -26,9 +26,9 @@ module Phases
       (Time.now.to_f * 1000)
     end
 
-    def ready?
+    def ready?(inside)
       actors_by_intent.all? do |actor, intent|
-        intent || check_intent(actor)
+        intent || check_intent(actor, inside: inside)
       end
     end
 
@@ -36,8 +36,8 @@ module Phases
       @actors_by_intent ||= @actors.to_h { |actor| [actor, nil] }
     end
 
-    def check_intent(actor)
-      intent = actor.intent
+    def check_intent(actor, inside:)
+      intent = actor.intent(inside)
       actors_by_intent.store(actor, intent) if intent
     end
   end

@@ -14,6 +14,10 @@ module Phases
 
     private
 
+    def next_phase
+      Act.new(actors_by_intent.compact)
+    end
+
     def timeout?
       @start_time < timestamp - @timeout
     end
@@ -26,10 +30,6 @@ module Phases
       actors_by_intent.all? do |actor, intent|
         intent || check_intent(actor)
       end
-    end
-
-    def next_phase
-      Act.new(actors_by_intent.compact)
     end
 
     def actors_by_intent

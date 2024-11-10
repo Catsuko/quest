@@ -4,12 +4,8 @@ class Actor
     @driver = driver
   end
 
-  def bind(environment)
-    @driver&.bind(environment)
-  end
-
   def intent
-    @driver ? @driver.intent : Intents::Pass
+    @driver ? @driver.intent(self) : Intents::Pass
   end
 
   def step(x_dir, y_dir, inside:)
@@ -23,14 +19,12 @@ class Actor
   end
 
   def at?(other_position)
-    Position.at(@body.x, @body.y) == other_position
+    position == other_position
   end
 
   def remove
     @body.remove
   end
-
-  private
 
   def position
     Position.at(@body.x, @body.y)

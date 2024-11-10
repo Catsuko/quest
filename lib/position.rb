@@ -8,7 +8,7 @@ class Position
       ((coord / @scale).floor * @scale) + @scale_offset
     end
 
-    def scale(n)
+    def scale(n = 1)
       n * (@scale)
     end
 
@@ -83,6 +83,12 @@ class Position
       body.x = @x - offset
       body.y = @y - offset
     end
+  end
+
+  def count_steps_to(other = nil, x: nil, y: nil)
+    return other.count_steps_to(x: @x, y: @y) if other
+
+    ((@x - x).abs + (@y - y).abs) / self.class.scale
   end
 
   def inspect

@@ -5,7 +5,7 @@ module Drivers
       @direction = nil
     end
 
-    def intent
+    def intent(*)
       direction = step_direction
       @direction = nil
       Intents::Move.new(*direction) if direction

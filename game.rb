@@ -2,7 +2,7 @@ require 'ruby2d'
 
 require_relative 'quest'
 require_relative 'lib/drivers/keyboard'
-require_relative 'lib/drivers/random'
+require_relative 'lib/drivers/wanderer'
 require_relative 'lib/graphics'
 
 tile_size = 64
@@ -12,15 +12,15 @@ room_bounds = Bounds.new(room_min_pos, room_min_pos.step(11, 7))
 room = Room.new(room_bounds, &Graphics.method(:tile))
 
 keyboard_driver = Drivers::Keyboard.new
+keyboard_driver.bind(self)
 hero = room.add(Actor.new(Graphics.hero, driver: keyboard_driver), faction: :player)
 
-enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Random))
-enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Random))
-enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Random))
+enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Wanderer.anywhere))
+enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Wanderer.new))
+enemy = room.add(Actor.new(Graphics.enemy, driver: Drivers::Wanderer.new))
 
 stone_pillars = 5.times { room.add(Actor.new(Graphics.stone_pillar)) }
 
-room.bind(self)
 update { room.update }
 
 set title: 'QUEST', borderless: true, width: 14 * tile_size, height: 10 * tile_size

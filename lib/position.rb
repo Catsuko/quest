@@ -16,6 +16,10 @@ class Position
       @scale_offset = (n * 0.5).floor
       @scale = n
     end
+
+    def cardinal_directions
+      @cardinal_directions ||= [[0, 1], [1, 0], [-1, 0], [0, -1]]
+    end
   end
 
   def initialize(x, y)
